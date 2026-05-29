@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whiteboard</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <a class="home-btn" href="../index.html" title="Home">Home</a>
+    <div class="app-container">
+        <h1>CSS Whiteboard 🎨</h1>
+        <div class="toolbar">
+            <div class="color-palette">
+                <div class="color-swatch active" style="background-color: #000000;" data-color="#000000"></div>
+                <div class="color-swatch" style="background-color: #e74c3c;" data-color="#e74c3c"></div>
+                <div class="color-swatch" style="background-color: #3498db;" data-color="#3498db"></div>
+                <div class="color-swatch" style="background-color: #2ecc71;" data-color="#2ecc71"></div>
+                <div class="color-swatch" style="background-color: #f1c40f;" data-color="#f1c40f"></div>
+            </div>
+            <div class="tools">
+                <label for="brush-size">Brush Size:</label>
+                <input type="range" id="brush-size" min="2" max="70" value="5" title="Brush Size">
+                <button id="clear-btn">Clear Canvas</button>
+            </div>
+        </div>
+        <canvas id="whiteboard"></canvas>
+    </div>
+    <script src="./script.js"></script>
+</body>
+</html>

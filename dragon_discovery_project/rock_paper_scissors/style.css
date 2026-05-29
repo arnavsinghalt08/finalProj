@@ -1,0 +1,155 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;600;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #1a2a40;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.game-container {
+    background-color: #2c3e50;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 650px;
+    border: 3px solid #4c6075;
+    transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+}
+
+h1 {
+    margin-top: 0;
+    color: orange;
+    font-weight: 700;
+}
+
+.score {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.3em;   
+    font-weight: 600;
+}
+
+.score span {
+    font-size: 2em;
+    display: inline-block;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.result p {
+    font-size: 1.8em;
+    height: 40px;
+    color: #f19100;
+    font-weight: 600
+}
+
+.options button {
+    background: #e66d0b;
+    color: white; 
+    border: none;
+    padding: 15px 30px;
+    margin: 0 10px;
+    border-radius: 10px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    border-bottom: 4px solid #b14e00;
+}
+
+.options button:hover {
+    background-color: #f34708;
+    transform: translateY(-5px);
+}
+
+.options button:active {
+    transform: translateY(-2px);
+}
+
+.options button:disabled {
+    background-color: #999;
+    cursor: not-allowed;
+    transform: translateY(-2px);
+    border-color: #666;
+}
+
+.match {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 40px 0;
+}
+
+.hand img {
+    width: 120px;
+    height: 120px;
+}
+
+#computer-handshake img {
+    transform: scaleX(-1);
+}
+
+.shake {
+    animation: shake-hand 0.4s 4 alternate;
+}
+
+@keyframes shake-hand {
+    from {
+        transform: rotate(15deg);
+    }
+    to {
+        transform: rotate(-15deg);
+    }
+}
+
+.player-wins-transform {
+    transform: scale(1.03) rotate(1deg);
+    box-shadow: 0 0 40px #2ecc71 , 0 0 60px #128a38;
+}
+
+.score-update {
+    transform: scale(1.6) rotate(10deg);
+    color: #2ecc71;
+}
+
+.home-btn {
+    position: fixed;
+    left: 2vmin;
+    top: 2vmin;
+    background: rgba(225, 225, 225, 0.08);
+    color: white;
+    padding: 1vmin 1.5vmin;
+    border-radius: 8px;
+    font-size: 600;
+    z-index: 9999;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.home-btn:hover {
+    background: rgba(225, 225, 225, 0.15);
+}
+
+.solar-btn {
+     position:fixed;
+    left:23vmin;
+    top:2vmin;
+    background:rgba(255,255,255,0.08);
+    color:#f0f0f0;
+    padding:1vmin 1.5vmin;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:600;
+    z-index:9999;
+    border:1px solid rgba(255,255,255,0.06);   
+}
+.solar-btn:hover {
+    background: rgba(225, 225, 225, 0.15);
+}

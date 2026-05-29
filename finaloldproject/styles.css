@@ -1,0 +1,13 @@
+p {
+    font-size:36px;
+}
+#first {
+    color: red;
+}
+#fourth {
+    font-size: 100px;
+}
+.border {
+    border: 2px;
+    border-style: solid;
+}

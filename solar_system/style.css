@@ -1,0 +1,285 @@
+:root{
+    --sun-size: 100px;
+    --mercury-orbit: 160px; --mercury-size: 10px;
+    --venus-orbit: 220px;   --venus-size: 16px;
+    --earth-orbit: 300px;   --earth-size: 18px;
+    --mars-orbit: 380px;    --mars-size: 14px;
+    --jupiter-orbit: 500px; --jupiter-size: 40px;
+    --saturn-orbit: 650px;  --saturn-size: 35px;
+    --uranus-orbit: 780px;  --uranus-size: 28px;
+    --neptune-orbit: 900px; --neptune-size: 26px;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1 {
+    position: absolute;
+    top: 30px;
+    color: #fff;
+    text-shadow: 0 0 10px #fff, 0 0 20px #0073e6;
+    letter-spacing: 2px;
+    z-index: 100;
+}
+
+.star-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    box-shadow: 100px 200px 1px #fff, 
+                500px 800px 2px #fff, 
+                -200px -400px 1px #fff, 
+                900px -100px 1px #fff, 
+                700px 300px 1px #fff;
+}
+
+.shooting-star {
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(-45deg, rgba(158, 222, 255, 1), rgba(255, 255, 255, 0));
+    border-radius: 999px;
+    filter: drop-shadow(0 0 6px rgba(158, 222, 255, 1));
+    animation: tail 3s ease-in-out infinite, shooting 3s ease-in-out infinite;
+}
+
+.shooting-star:nth-child(1) { top: 10%; left: -100%; animation-delay: 1.3s; }
+.shooting-star:nth-child(2) { top: 40%; left: -100%; animation-delay: 2.8s; }
+.shooting-star:nth-child(3) { top: 80%; left: -100%; animation-delay: 0.2s; }
+
+@keyframes tail {
+    0% { width: 0; }
+    30% { width: 100px; }
+    100% { width: 0; }
+}
+@keyframes shooting {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(120vw); }
+}
+
+.solar-system {
+    position: relative;
+    width: var(--neptune-orbit);
+    height: var(--neptune-orbit);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sun {
+    position: absolute;
+    width: var(--sun-size);
+    height: var(--sun-size);
+    border-radius: 50%;
+    background: radial-gradient(circle, #ffd700, #ff8c00);
+    box-shadow: 0 0 60px #ff8c00, 0 0 90px #ffd700;
+    animation: sun-glow 4s infinite alternate;
+}
+
+@keyframes sun-glow {
+    from { box-shadow: 0 0 60px #ff8c00, 0 0 90px #ffd700; }
+    to { box-shadow: 0 0 80px #ff8c00, 0 0 120px #ffd700, 0 0 150px #ff4500; }
+}
+
+.orbit {
+    position: absolute;
+    border: 1px solid rgba(150, 150, 200, 0.2);
+    border-radius: 50%;
+    animation: spin linear infinite;
+    pointer-events: none; 
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.planet {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+    pointer-events: auto;
+}
+
+.planet:hover {
+    transform: translateY(-50%) scale(1.5);
+    z-index: 100;
+}
+
+#info-box {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 10, 30, 0.85);
+    backdrop-filter: blur(5px);
+    color: #fff;
+    padding: 15px 25px;
+    border-radius: 10px;
+    border: 1px solid #4a6a8a;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Bouncy transition */
+    z-index: 200;
+}
+
+#info-box.hidden {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.8) translateY(20px);
+    pointer-events: none;
+}
+
+#mercury-orbit {
+    width: var(--mercury-orbit);
+    height: var(--mercury-orbit);
+    animation-duration: 8.8s;
+}
+
+#mercury {
+    width: var(--mercury-size);
+    height: var(--mercury-size);
+    background: radial-gradient(circle, #b4b4b4, #8a8a8a);
+}
+
+#venus-orbit {
+    width: var(--venus-orbit);
+    height: var(--venus-orbit);
+    animation-duration: 22.5s;
+}
+
+#venus {
+    width: var(--venus-size);
+    height: var(--venus-size);
+    background: radial-gradient(circle, #f8c291, #e67e22);
+}
+
+
+#earth-orbit {
+    width: var(--earth-orbit);
+    height: var(--earth-orbit);
+    animation-duration: 36.5s;
+}
+
+#earth {
+    width: var(--earth-size);
+    height: var(--earth-size);
+    background: linear-gradient(0deg, #3498db, #ffffff, #2ecc71);
+}
+
+.moon {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: #f0f0f0;
+    border-radius: 50%;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#saturn-orbit {
+    width: var(--saturn-orbit);
+    height: var(--saturn-orbit);
+    animation-duration: 180s;
+}
+
+#saturn {
+    width: var(--saturn-size);
+    height: var(--saturn-size);
+    background: radial-gradient(circle, #f1e7a5, #d2c589);
+}
+
+.ring {
+    position: absolute;
+    width: 160%;
+    height: 160%;
+    border: 4px solid rgba(210, 197, 137, 0.7);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+#mars-orbit {
+    width: var(--mars-orbit);
+    height: var(--mars-orbit);
+    animation-duration: 68.7s;
+}
+
+#mars {
+    width: var(--mars-size);
+    height: var(--mars-size);
+    background: radial-gradient(circle, #e74c3c, #c0392b);
+}
+
+#jupiter-orbit {
+    width: var(--jupiter-orbit);
+    height: var(--jupiter-orbit);
+    animation-duration: 120s;
+}
+
+#jupiter {
+    width: var(--jupiter-size);
+    height: var(--jupiter-size);
+    background: linear-gradient(90deg, #d8caaf, #c1a67d, #d8caaf);
+}
+
+#uranus-orbit {
+    width: var(--uranus-orbit);
+    height: var(--uranus-orbit);
+    animation-duration: 250s;
+}
+
+#uranus {
+    width: var(--uranus-size);
+    height: var(--uranus-size);
+    background: radial-gradient(circle, #b0e0e6, #87ceeb);
+}
+
+#neptune-orbit {
+    width: var(--neptune-orbit);
+    height: var(--neptune-orbit);
+    animation-duration: 320s;
+}
+
+#neptune {
+    width: var(--neptune-size);
+    height: var(--neptune-size);
+    background: radial-gradient(circle, #3f54ba, #2c3e50);
+}
+
+.home-btn{
+    position:fixed;
+    left:2vmin;
+    top:2vmin;
+    background:rgba(255,255,255,0.08);
+    color:#f0f0f0;
+    padding:1vmin 1.5vmin;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:600;
+    z-index:9999;
+    border:1px solid rgba(255,255,255,0.06);
+}
+
+.home-btn:hover {
+    background: rgba(255, 255, 255, 0.12)
+}
+
+.audiowide-regular {
+  font-family: "Audiowide", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}

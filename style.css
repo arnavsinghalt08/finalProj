@@ -1,0 +1,118 @@
+:root{
+    --bg1: #0f1724;
+    --bg2: #0e1827;
+    --card:#0f1724;
+    --muted:#98a0b3;
+    --accent:#3b82f6;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 3rem;
+    box-sizing: border-box;
+    font-family: Inter, ui-san-sarif, system-ui, Segoe UI, Roboto, Helvetica, Arial;
+    background:
+        radial-gradient(75rem 37rem at 10% 10%, rgba(57, 130, 246, 0.06), transparent),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .container {
+        max-width: 75rem;
+        width: 100%;
+        padding: 0 1.5rem;
+    }
+
+    header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.1rem;
+        margin-bottom: 1.75rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+        margin: 0;
+        font-weight: 700;
+        letter-spacing: -0.01;
+    }
+
+    .meta {
+        color: var(--muted);
+        margin: 0.3rem;
+        margin-bottom: 1rem; 
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+        gap: 1.5rem;
+        align-items: start;
+    }
+
+    .card {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.04));
+        border: 0.06256rem solid rgba(255, 255, 255, 0.03);
+        padding: 1.3rem;
+        border-radius: 0.8rem;
+        text-decoration: none;
+        color: inherit;
+        display: flex; 
+        flex-direction: column;
+        gap: 0.6rem;
+        transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-0.25rem);
+        box-shadow: 0 1.8rem 3rem rgba(0, 0, 0, 0.6);
+    }
+
+    .thumb {
+        height: 10rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.1));
+        border-radius: 0.6rem;
+        overflow: hidden;
+    }
+
+    .thumb img {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    .card strong {
+        font-size: 1.1rem;
+        color: white;
+    }
+
+    .card .meta {
+        color: var(--muted);
+        font-size: 0.8rem;
+    }
+
+    @media (max-width: 32.5rem) {
+        body {
+            padding: 1rem;
+        }
+
+        .thumb {
+            height: 7rem;
+        }
+
+        .grid {
+            grid-template-columns: 1fr;
+        }
+    }

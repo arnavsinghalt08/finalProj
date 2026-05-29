@@ -1,0 +1,37 @@
+
+.game-btn {
+    position: fixed;
+    right: 2vmin;
+    top: 2vmin;
+    background: rgb(99, 0, 0);
+    color: rgb(0, 0, 0);
+    padding: 1vmin 1.5vmin;
+    border-radius: 8px;
+    font-size: 600;
+    z-index: 9999;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    font-weight: 600;
+    text-decoration: none;
+}
+.game-btn:hover {
+    background: rgba(225, 225, 225, 0.15);
+}
+
+
+.solar-btn {
+    position: fixed;
+    right: 20vmin;
+    top: 2vmin;
+    background: rgb(99, 0, 0);
+    color: rgb(0, 0, 0);
+    padding: 1vmin 1.5vmin;
+    border-radius: 8px;
+    font-size: 600;
+    z-index: 9999;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    font-weight: 600;
+    text-decoration: none;
+}
+.solar-btn:hover {
+    background: rgba(225, 225, 225, 0.15);
+}

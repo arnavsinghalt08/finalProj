@@ -1,0 +1,49 @@
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock-Paper-Scissors</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <a class="home-btn" href="../index.html" title="Home">Dragon Discovery</a>
+    <a class="solar-btn" href="../solar_system/index.html">SolarSystem</a>
+
+    <div class="game-container">
+        <header>
+            <h1>Rock,Paper,Scissors</h1>
+        </header>
+
+        <div class="scoreboard">
+            <h2>Scoreboard</h2>
+            <div>
+                <p>Player: <span id="player-score">0</span></p>
+                <p>Computer: <span id="computer-score">0</span></p>
+                    <p>High Score: <span id="high-score">0</span></p>
+            </div>
+        </div>
+
+        <div class="match">
+            <div class="hand" id="player-hand">
+                <img src="./images/logo.png" alt="players hand">
+            </div>
+            <div class="hand" id="computer-hand">
+                <img src="./images/logo.png" alt="computers hand">
+            </div>
+        </div>
+
+        <div class="result">
+            <p>choose your weapon</p>
+        </div>
+
+        <div class="options">
+            <button class="choice-button" data-choice="rock" onclick="playSound()">Rock</button>
+            <button class="choice-button" data-choice="paper" onclick="playSound()">Paper</button>
+            <button class="choice-button" data-choice="scissors" onclick="playSound()">Scissors</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
