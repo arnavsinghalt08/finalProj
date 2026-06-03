@@ -3,13 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whiteboard</title>
+    <title>AI Drawing Guesser</title>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
     <a class="home-btn" href="../index.html" title="Home">Home</a>
     <div class="app-container">
-        <h1>CSS Whiteboard 🎨</h1>
+        <h1>AI Drawing Guesser 🎨</h1>
+
+        <div class="game-prompt">
+            <span class="prompt-label">Draw:</span>
+            <span class="prompt-word" id="prompt-word">Loading…</span>
+            <button class="new-word-btn" id="new-word-btn">New Word</button>
+        </div>
+
         <div class="toolbar">
             <div class="color-palette">
                 <div class="color-swatch active" style="background-color: #000000;" data-color="#000000"></div>
@@ -24,7 +31,14 @@
                 <button id="clear-btn">Clear Canvas</button>
             </div>
         </div>
+
         <canvas id="whiteboard"></canvas>
+
+        <button class="guess-btn" id="guess-btn">🤖 Let AI Guess!</button>
+
+        <div class="result-panel" id="result-panel">
+            <div class="result-content" id="result-content"></div>
+        </div>
     </div>
     <script src="./script.js"></script>
 </body>
