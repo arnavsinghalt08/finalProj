@@ -6,10 +6,12 @@ body {
     color: #ecf0f1;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     min-height: 100vh;
     margin: 0;
-    overflow: hidden;
+    padding: 2rem 0 3rem;
+    box-sizing: border-box;
+    overflow-y: auto;
 }
 
 .app-container {
@@ -21,6 +23,55 @@ body {
     max-width: 900px;
 }
 
+/* --- Game Prompt --- */
+.game-prompt {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: #2c3e50;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    width: 100%;
+    box-sizing: border-box;
+    animation: fadeInUp 0.5s ease-out;
+}
+
+.prompt-label {
+    font-size: 1rem;
+    color: #95a5a6;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.prompt-word {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #f1c40f;
+    flex: 1;
+    letter-spacing: 0.03em;
+}
+
+.new-word-btn {
+    padding: 0.4rem 1rem;
+    background-color: #8e44ad;
+    border: none;
+    color: white;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.new-word-btn:hover {
+    background-color: #7d3c98;
+    transform: scale(1.04);
+}
+
+/* --- Toolbar --- */
 .toolbar {
     width: 100%;
     background-color: #2c3e50;
@@ -71,6 +122,7 @@ body {
     border: none;
     color: white;
     font-weight: bold;
+    font-family: 'Poppins', sans-serif;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.2s;
@@ -91,62 +143,115 @@ input[type="range"] {
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     cursor: crosshair;
     animation: zoomIn 0.7s ease-out;
+    width: 100%;
 }
 
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
+/* --- Guess Button --- */
+.guess-btn {
+    padding: 0.75rem 2.5rem;
+    background: linear-gradient(135deg, #16a085, #1abc9c);
+    border: none;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(26,188,156,0.4);
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+}
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.guess-btn:hover:not(:disabled) {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 6px 20px rgba(26,188,156,0.55);
+}
+
+.guess-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+/* --- Result Panel --- */
+.result-panel {
+    width: 100%;
+    border-radius: 10px;
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease, opacity 0.4s ease;
+    opacity: 0;
+    box-sizing: border-box;
+}
+
+.result-panel.visible {
+    max-height: 160px;
+    padding: 1.25rem 1.5rem;
+    opacity: 1;
+}
+
+.result-panel.success {
+    background: linear-gradient(135deg, #1e8449, #27ae60);
+    box-shadow: 0 4px 15px rgba(39,174,96,0.35);
+}
+
+.result-panel.fail {
+    background: linear-gradient(135deg, #1a5276, #2471a3);
+    box-shadow: 0 4px 15px rgba(36,113,163,0.35);
+}
+
+.result-content {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.result-content strong {
+    font-size: 1.25rem;
+}
+
+.result-content small {
+    display: block;
+    margin-top: 0.3rem;
+    font-size: 0.9rem;
+    opacity: 0.85;
+}
+
+/* --- Animations --- */
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes zoomIn {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+    from { opacity: 0; transform: scale(0.95); }
+    to   { opacity: 1; transform: scale(1); }
 }
 
 h1 {
     animation: fadeInDown 0.7s ease-out;
+    margin: 0;
 }
 
-.home-btn{
-    position:fixed;
-    left:2vmin;
-    top:2vmin;
-    background:rgba(255,255,255,0.08);
-    color:#f0f0f0;
-    padding:1vmin 1.5vmin;
-    border-radius:8px;
-    text-decoration:none;
-    font-weight:600;
-    z-index:9999;
-    border:1px solid rgba(255,255,255,0.06);
+/* --- Home Button --- */
+.home-btn {
+    position: fixed;
+    left: 2vmin;
+    top: 2vmin;
+    background: rgba(255,255,255,0.08);
+    color: #f0f0f0;
+    padding: 1vmin 1.5vmin;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    z-index: 9999;
+    border: 1px solid rgba(255,255,255,0.06);
 }
 
 .home-btn:hover {
-    background: rgba(255, 255, 255, 0.12)
+    background: rgba(255, 255, 255, 0.12);
 }

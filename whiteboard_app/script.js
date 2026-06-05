@@ -1,97 +1,141 @@
 window.addEventListener('load', () => {
-    // --- Get DOM Elements ---
+    const WORDS = [
+        'cat', 'dog', 'house', 'tree', 'sun', 'car', 'boat', 'fish',
+        'bird', 'flower', 'mountain', 'star', 'moon', 'apple', 'banana',
+        'bicycle', 'airplane', 'rainbow', 'cloud', 'umbrella', 'pizza',
+        'cake', 'hat', 'clock', 'key', 'heart', 'crown', 'snail',
+        'elephant', 'guitar', 'book', 'glasses', 'shoe', 'chair', 'lamp',
+        'rocket', 'castle', 'dragon', 'penguin', 'cactus', 'lighthouse'
+    ];
+
     const canvas = document.getElementById('whiteboard');
     const colorSwatches = document.querySelectorAll('.color-swatch');
     const brushSizeSlider = document.getElementById('brush-size');
     const clearButton = document.getElementById('clear-btn');
+    const promptWord = document.getElementById('prompt-word');
+    const newWordBtn = document.getElementById('new-word-btn');
+    const guessBtn = document.getElementById('guess-btn');
+    const resultPanel = document.getElementById('result-panel');
+    const resultContent = document.getElementById('result-content');
 
-    //Establish the drawing context
     const ctx = canvas.getContext('2d');
 
-    // --- State ---
     let isDrawing = false;
     let lastX = 0;
     let lastY = 0;
+    let currentWord = '';
 
-    function setDefaultCanvasSettings(){
-        // Set properties for smooth lines
+    function pickRandomWord() {
+        const word = WORDS[Math.floor(Math.random() * WORDS.length)];
+        currentWord = word;
+        promptWord.textContent = word.charAt(0).toUpperCase() + word.slice(1);
+        resultPanel.classList.remove('visible', 'success', 'fail');
+        clearCanvas();
+    }
+
+    function setDefaultCanvasSettings() {
         ctx.lineJoin = 'round';
         ctx.lineCap = 'round';
-
-        // Set properties from the UI controls
         ctx.lineWidth = brushSizeSlider.value;
         ctx.strokeStyle = document.querySelector('.color-swatch.active').dataset.color;
     }
 
-    function handleColorClick(e){
-        // Remove 'active' class from all swatches
+    function handleColorClick(e) {
         colorSwatches.forEach(swatch => swatch.classList.remove('active'));
-
-        // Add 'active' class to the clicked swatch
-        const clickedSwatch = e.target;
-        clickedSwatch.classList.add('active');
-
-        // Update drawing color
-        ctx.strokeStyle = clickedSwatch.dataset.color;
+        e.target.classList.add('active');
+        ctx.strokeStyle = e.target.dataset.color;
     }
 
-    function handleBrushSizeChange(e){
+    function handleBrushSizeChange(e) {
         ctx.lineWidth = e.target.value;
     }
 
-    function clearCanvas(){
+    function clearCanvas() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
-    function startDrawing(e){
+    function startDrawing(e) {
         isDrawing = true;
         [lastX, lastY] = [e.offsetX, e.offsetY];
     }
 
-    function stopDrawing(){
+    function stopDrawing() {
         isDrawing = false;
     }
 
-    function draw(e){
-        if (!isDrawing) return; // Stop if not drawing
-
+    function draw(e) {
+        if (!isDrawing) return;
         ctx.beginPath();
-        ctx.moveTo(lastX, lastY);       // Start from last point
-        ctx.lineTo(e.offsetX, e.offsetY); // Go to current point
-        ctx.stroke();                   // Draw the line
-
-        // Update last coordinates for the next segment
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.stroke();
         [lastX, lastY] = [e.offsetX, e.offsetY];
     }
 
-    function resizeCanvas(){
+    function resizeCanvas() {
         const container = canvas.parentElement;
         canvas.width = container.offsetWidth;
-        canvas.height = window.innerHeight * 0.6; // Set height to 60% of viewport height
+        canvas.height = window.innerHeight * 0.55;
         setDefaultCanvasSettings();
     }
 
-    
-    // Call the resize canvas function
+    async function submitGuess() {
+        guessBtn.disabled = true;
+        guessBtn.textContent = '🤔 Thinking…';
+        resultPanel.classList.remove('visible', 'success', 'fail');
+
+        // Scale down the canvas to reduce payload size before sending
+        const small = document.createElement('canvas');
+        small.width = 400;
+        small.height = 300;
+        const sCtx = small.getContext('2d');
+        sCtx.fillStyle = '#ffffff';
+        sCtx.fillRect(0, 0, 400, 300);
+        sCtx.drawImage(canvas, 0, 0, 400, 300);
+
+        const imageData = small.toDataURL('image/png');
+
+        try {
+            const res = await fetch('/api/guess-drawing', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ imageData })
+            });
+
+            if (!res.ok) throw new Error('Server error');
+
+            const { guess } = await res.json();
+
+            const matched =
+                guess.toLowerCase().includes(currentWord.toLowerCase()) ||
+                currentWord.toLowerCase().includes(guess.toLowerCase());
+
+            resultPanel.classList.add('visible', matched ? 'success' : 'fail');
+            resultContent.innerHTML = matched
+                ? `✅ <strong>Correct!</strong> The AI guessed "<em>${guess}</em>" — nice drawing!`
+                : `🤖 The AI guessed: <strong>"${guess}"</strong><br><small>The word was: <em>${currentWord}</em></small>`;
+        } catch {
+            resultPanel.classList.add('visible', 'fail');
+            resultContent.innerHTML = '❌ Something went wrong. Try again!';
+        }
+
+        guessBtn.disabled = false;
+        guessBtn.textContent = '🤖 Let AI Guess!';
+    }
+
     resizeCanvas();
-
-    // Add a mousedown event listener to the canvas to call startDrawing
-    canvas.addEventListener('mousedown', startDrawing);
-    // Add a mousemove event listener to the canvas to call draw
-    canvas.addEventListener('mousemove', draw);
-    // Add a mouseup event listener to the canvas to call stopDrawing
-    canvas.addEventListener('mouseup', stopDrawing);
-    // Add a mouseout event listener to the canvas to call stopDrawing
-    canvas.addEventListener('mouseout', stopDrawing);
-
-    // Loop through the color swatches and add a click event listener to each which calls handleColorClick
-    colorSwatches.forEach(swatch => swatch.addEventListener('click', handleColorClick));
-    // Add an event listener for 'input' to brushSizeSlider which calls handleBrushSizeChange
-    brushSizeSlider.addEventListener('input', handleBrushSizeChange);
-    // Add an event listener for 'click' to clearButton which calls clearCanvas
-    clearButton.addEventListener('click', clearCanvas);
-
-    // Add an event listener for 'resize' to the window to call the resizeCanvas function
     window.addEventListener('resize', resizeCanvas);
 
-}); 
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mouseout', stopDrawing);
+
+    colorSwatches.forEach(s => s.addEventListener('click', handleColorClick));
+    brushSizeSlider.addEventListener('input', handleBrushSizeChange);
+    clearButton.addEventListener('click', clearCanvas);
+    newWordBtn.addEventListener('click', pickRandomWord);
+    guessBtn.addEventListener('click', submitGuess);
+
+    pickRandomWord();
+});
